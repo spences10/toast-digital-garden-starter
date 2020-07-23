@@ -19,14 +19,11 @@ exports.sourceData = async ({ createPage, ...options }) => {
 
   return Promise.all(
     files.map(async (filename) => {
-      console.log("=====================");
-      console.log("filename::", filename);
-      console.log("=====================");
       const file = await fs.readFile(filename, "utf-8");
       let compiledMDX;
 
       const { data, content } = frontmatter(file);
-
+      filename = filename.split("/").slice(0, -1).join("/");
       try {
         compiledMDX = await mdx(content, {
           rehypePlugins: [
@@ -35,7 +32,7 @@ exports.sourceData = async ({ createPage, ...options }) => {
             [
               cloudinary,
               {
-                baseDir: path.join(__dirname, "content", "posts", filename),
+                baseDir: path.join(__dirname, filename),
                 uploadFolder: "toast-test",
               },
             ],
@@ -55,9 +52,6 @@ exports.sourceData = async ({ createPage, ...options }) => {
       });
 
       // Data to be stored in `mdx-posts.json` file
-      console.log("=====================");
-      console.log(`FILENAME:::${filename}`);
-      console.log("=====================");
       return {
         ...data,
         slug: filename,
