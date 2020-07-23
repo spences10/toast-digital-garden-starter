@@ -4,6 +4,10 @@ import { h } from "preact";
 export default (props) => {
   const posts = props.posts;
 
+  console.log("=====================");
+  console.log(props);
+  console.log("=====================");
+
   return (
     <main>
       <h1 className="text-center text-4xl md:text-left md:text-6xl">

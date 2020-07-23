@@ -1,7 +1,7 @@
 /** @jsx h */
+import { MDXProvider } from "@mdx-js/preact";
 import { h } from "preact";
 import { Helmet } from "react-helmet";
-import { MDXProvider } from "@mdx-js/preact";
 
 export default ({ children, ...props }) => {
   return (

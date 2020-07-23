@@ -7,17 +7,22 @@ const mdx = require("@mdx-js/mdx");
 const rehypeSlug = require("rehype-slug");
 const cloudinary = require("rehype-local-image-to-cloudinary");
 const rehypePrism = require("./rehype-prism-plugin");
+const globby = require("globby");
 
 exports.sourceData = async ({ createPage, ...options }) => {
   console.log("sourceData");
-  const files = await fs.readdir("./content/posts/");
+  // const files = await fs.readdir("./content/posts/");
+
+  const files = await globby("./content", {
+    expandDirectories: { extensions: ["md*"] },
+  });
 
   return Promise.all(
     files.map(async (filename) => {
-      const file = await fs.readFile(
-        `./content/posts/${filename}/index.mdx`,
-        "utf-8"
-      );
+      console.log("=====================");
+      console.log("filename::", filename);
+      console.log("=====================");
+      const file = await fs.readFile(filename, "utf-8");
       let compiledMDX;
 
       const { data, content } = frontmatter(file);
@@ -50,6 +55,9 @@ exports.sourceData = async ({ createPage, ...options }) => {
       });
 
       // Data to be stored in `mdx-posts.json` file
+      console.log("=====================");
+      console.log(`FILENAME:::${filename}`);
+      console.log("=====================");
       return {
         ...data,
         slug: filename,
