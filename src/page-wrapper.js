@@ -7,7 +7,7 @@ export default ({ children, ...props }) => {
   return (
     <div>
       <Helmet>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="/style.css" />
       </Helmet>
       <header className="bg-green-400 p-2">
         <div className="flex max-w-6xl w-full mx-auto">
